@@ -12,16 +12,20 @@ pool:
 stages:  
   - stage: Test_Python_Versions  
     jobs:
-      - job: Python38
+      - job: TestPythonVersions
         strategy:
           matrix:
-            Python38:
-              python.version: "3.8"
+            py38:
+              python_version: "3.8"
+            py39:
+              python_version: "3.9"
+            py310:
+              python_version: "3.10"
         steps:
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: "3.8"
-              displayName: "Use Python 3.8"
+              versionSpec: $(python_version)
+            displayName: "Use Python $(python_version)"
           - script: |
               python -m pip install --upgrade pip
               pip install -r requirements.txt
